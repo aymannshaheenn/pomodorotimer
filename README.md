@@ -49,7 +49,8 @@ Pomodoro empowers users to:
 
 This ER diagram visualizes the relational structure of the database used in Pomodoro:
 
-<img src="screenshots/er-diagram.png" alt="ER Diagram" width="600" />
+![ER Diagram](screenshots/er-diagram.png)
+
 
 
 ---
