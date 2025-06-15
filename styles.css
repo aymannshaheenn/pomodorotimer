@@ -1,0 +1,115 @@
+
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: #fff0f5;
+  color: #ff6f91;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  background: #ffe4ec;
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle .sun {
+  opacity: 0;
+}
+
+
+body.dark-mode {
+  background-image: url('darkbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f2f2f2;
+}
+
+body.dark-mode .theme-toggle {
+  background: #333;
+  color: #ffe4ec;
+}
+
+body.dark-mode .theme-toggle .sun {
+  opacity: 1;
+}
+
+body.dark-mode .theme-toggle .icon:first-child {
+  opacity: 0;
+}
+
+body.dark-mode,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode .profile-username,
+body.dark-mode .profile-level,
+body.dark-mode .stat-item,
+body.dark-mode .choose-avatar-title,
+body.dark-mode .avatar-options,
+body.dark-mode .login-box input::placeholder {
+  color: #ffffff !important;
+}
+
+
+body.dark-mode .login-box,
+body.dark-mode .profile-page,
+body.dark-mode .task-container,
+body.dark-mode .custom-box,
+body.dark-mode .pomodoro-box {
+  background-color: rgba(0, 12, 52, 0.9);
+  color: #f2f2f2;
+  box-shadow: none;
+  border: 2px solid #ff88aa;
+}
+
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode button {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+body.dark-mode .profile-stats .stat-item,
+body.dark-mode .avatar-option,
+body.dark-mode #sidebar {
+  background-color: rgba(40, 40, 40, 0.95);
+  color: #eee;
+  border-color: #dd003f;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+body.dark-mode a {
+  color: #ff99c9;
+}
+
+body.dark-mode a:hover {
+  color: #ffc0cb;
+}

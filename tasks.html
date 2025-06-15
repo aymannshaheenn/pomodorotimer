@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro Task Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+        body, input, select, textarea, button, h1, h2, h3, ul, li, label {
+  color:  #ff6f91;
+}
+
+      margin: 0;
+      padding: 0;
+      font-family: 'Press Start 2P', cursive;
+      background: url('bg2.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .main-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px 20px;
+      border-radius: 30px;
+      box-shadow: 12px 12px 25px rgba(0,0,0,0.1), -8px -8px 20px rgba(255,255,255,0.6);
+      width: 90%;
+      max-width: 500px;
+      margin: 60px 0;
+    }
+
+    h1, h2 {
+      color: #ff6f91;
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="text"], select, textarea, input[type="number"] {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      padding: 8px;
+      border: none;
+      border-radius: 10px;
+      background-color: #fff5f9;
+      box-shadow: inset 3px 3px 6px rgba(0,0,0,0.1), inset -2px -2px 6px rgba(255,255,255,0.8);
+      color:  #ff6f91;
+      width: 100%;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    button {
+      font-family: 'Press Start 2P', cursive;
+      padding: 10px 14px;
+      font-size: 10px;
+      border: none;
+      border-radius: 12px;
+      background-color: #fbaecb;
+      color: white;
+      cursor: pointer;
+      box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);
+    }
+
+    button:hover {
+      background-color: #ffd6e0;
+      color: #555;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    .task-section {
+      margin-top: 20px;
+    }
+
+    .task-section h3 {
+      color:  #ff6f91;
+      font-size: 10px;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+   li {
+  background-color: #ffe0eb;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px; 
+  font-family: 'Arial', sans-serif; 
+  line-height: 1.6;
+  margin-bottom: 12px;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.1), -2px -2px 6px rgba(255,255,255,0.6);
+}
+
+li button {
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  background-color: #fbaecb;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+li button:hover {
+  background-color: #ffd6e0;
+  color: #555;
+}
+
+    hr {
+      border: none;
+      border-top: 1px dashed #c94f7c;
+      margin: 6px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+    label {
+  font-size: 12px;
+}
+
+   #menuToggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+  }
+
+  #menuToggle:hover {
+    transform: scale(1.1) rotate(3deg);
+    size:30px;
+  }
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  box-sizing: border-box; /* <- THIS is key */
+  background-color: rgba(255, 245, 250, 0.96);
+  padding: 40px 25px;
+  box-shadow: 8px 0 15px rgba(0, 0, 0, 0.1);
+  transition: left 0.4s ease;
+  z-index: 1000;
+  font-family: 'Press Start 2P', cursive;
+  overflow-y: auto;
+}
+
+#sidebar a {
+  display: block;
+  margin: 30px 0;         
+  font-size: 14px;         
+  line-height: 1.8;    
+   text-align: center;      
+  color: #c94f7c;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#sidebar a:hover {
+  transform: translateX(5px);
+  color: #ff6f91;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: #fff0f5;
+  color: #ff6f91;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  background: #ffe4ec;
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle .sun {
+  opacity: 0;
+}
+
+body.dark-mode {
+  background-image: url('darkbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f2f2f2;
+}
+
+body.dark-mode .theme-toggle {
+  background: #333;
+  color: #ffe4ec;
+}
+
+body.dark-mode .theme-toggle .sun {
+  opacity: 1;
+}
+
+body.dark-mode .theme-toggle .icon:first-child {
+  opacity: 0;
+}
+
+body.dark-mode,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode .profile-username,
+body.dark-mode .profile-level,
+body.dark-mode .stat-item,
+body.dark-mode .choose-avatar-title,
+body.dark-mode .avatar-options,
+body.dark-mode .login-box input::placeholder {
+  color: #ffffff !important;
+}
+
+body.dark-mode .login-box,
+body.dark-mode .profile-page,
+body.dark-mode .task-container,
+body.dark-mode .custom-box {
+  background-color: rgba(0, 12, 52, 0.9);
+  color: #f2f2f2;
+  box-shadow: none;
+  border: 2px solid #ff88aa;
+}
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+body.dark-mode .profile-stats .stat-item,
+body.dark-mode .avatar-option,
+body.dark-mode #sidebar {
+  background-color: rgba(40, 40, 40, 0.95);
+  color: #eee;
+  border-color: #dd003f;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+body.dark-mode a {
+  color: #ff99c9;
+}
+body.dark-mode a:hover {
+  color: #ffc0cb;
+}
+
+
+body.dark-mode .main-container {
+  background-color: rgba(0, 12, 52, 0.95);
+  border: 2px solid #ff88aa;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+body.dark-mode .main-container h1,
+body.dark-mode .main-container h2,
+body.dark-mode .main-container h3,
+body.dark-mode .main-container p,
+body.dark-mode .main-container label {
+  color: #ffffff;
+}
+
+body.dark-mode input[type="text"],
+body.dark-mode input[type="number"],
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #1c1c2c;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+body.dark-mode button {
+  background-color: #1a1a1a;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+body.dark-mode button:hover {
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+body.dark-mode li {
+  background-color: #2a2a2a;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: 4px 4px 8px rgba(0,0,0,0.3), -2px -2px 6px rgba(255,255,255,0.05);
+}
+
+body.dark-mode li button {
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #666;
+  box-shadow: inset 1px 1px 4px #111, inset -1px -1px 4px #444;
+}
+
+body.dark-mode li button:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+  </style>
+
+</head>
+
+<body>
+<img src="star-removebg-preview.png" id="menuToggle" alt="Menu" onclick="toggleSidebar()">
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+  <span class="icon">🌙</span>
+  <span class="icon sun">☀️</span>
+</button>
+<div id="sidebar">
+  <a href="index.html">Login</a>
+  <a href="userprofile.html">Profile</a>
+     <a href="tasks.html">Tasks</a>
+    <a href="focus.html">Timer</a>
+    <a href="custom.html">Custom Timer</a>
+    <a href="history.html">History</a>
+    <a href="goals.html">Goals</a>
+    <a href="motivational.html">Motivation</a>
+  <a href="about.html">About</a>
+</div>
+ 
+
+  <div class="main-container">
+    <form id="taskForm">
+      <h1>Task Manager</h1>
+
+      <input type="hidden" id="taskId">
+      <label>Title:
+        <input type="text" id="title" required>
+      </label>
+
+      <div class="row">
+        <div>
+          <label>Priority:
+            <select id="priority">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>Sessions:
+            <input type="number" id="sessions" min="1" value="1">
+          </label>
+        </div>
+      </div>
+
+      <label>Notes:
+        <textarea id="notes" rows="2"></textarea>
+      </label>
+
+      <button type="submit">Save Task</button>
+    </form>
+
+    <div class="task-list-wrapper">
+      <h2>Tasks</h2>
+
+      <div class="task-section hidden" id="highSection">
+        <h3 onclick="toggleList('highList')">High Priority</h3>
+        <ul id="highList"></ul>
+      </div>
+
+      <div class="task-section hidden" id="mediumSection">
+        <h3 onclick="toggleList('mediumList')">Medium Priority</h3>
+        <ul id="mediumList"></ul>
+      </div>
+
+      <div class="task-section hidden" id="lowSection">
+        <h3 onclick="toggleList('lowList')">Low Priority</h3>
+        <ul id="lowList"></ul>
+      </div>
+    </div>
+  </div>
+
+<script>
+const form = document.getElementById('taskForm');
+const titleInput = document.getElementById('title');
+const priorityInput = document.getElementById('priority');
+const sessionsInput = document.getElementById('sessions');
+const notesInput = document.getElementById('notes');
+const taskIdInput = document.getElementById('taskId');
+
+const highList = document.getElementById('highList');
+const mediumList = document.getElementById('mediumList');
+const lowList = document.getElementById('lowList');
+
+let tasks = [];
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.style.left = sidebar.style.left === '0px' ? '-260px' : '0';
+}
+
+function toggleList(listId) {
+  document.getElementById(listId).classList.toggle('hidden');
+}
+
+function renderTasks() {
+  highList.innerHTML = '';
+  mediumList.innerHTML = '';
+  lowList.innerHTML = '';
+
+  const highTasks = tasks.filter(t => t.priority === 'High');
+  const medTasks = tasks.filter(t => t.priority === 'Medium');
+  const lowTasks = tasks.filter(t => t.priority === 'Low');
+
+  document.getElementById('highSection').classList.toggle('hidden', highTasks.length === 0);
+  document.getElementById('mediumSection').classList.toggle('hidden', medTasks.length === 0);
+  document.getElementById('lowSection').classList.toggle('hidden', lowTasks.length === 0);
+
+  highTasks.forEach((task) => addTaskToList(task, highList));
+  medTasks.forEach((task) => addTaskToList(task, mediumList));
+  lowTasks.forEach((task) => addTaskToList(task, lowList));
+}
+
+function addTaskToList(task, list) {
+  const li = document.createElement('li');
+  li.innerHTML = `
+    <strong>${task.title}</strong><br>
+    Priority: ${task.priority} | Sessions: ${task.sessions}<br>
+    Notes: ${task.notes || 'None'}<br>
+    <button onclick="editTask(${task.task_id})">Edit</button>
+    <button onclick="deleteTask(${task.task_id})">Delete</button>
+    <hr>
+  `;
+  list.appendChild(li);
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = taskIdInput.value;
+  const task = {
+    title: titleInput.value,
+    priority: priorityInput.value,
+    sessions: parseInt(sessionsInput.value),
+    notes: notesInput.value
+  };
+
+  if (id === '') {
+    await fetch('tasks.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(task)
+    });
+  } else {
+    task.task_id = parseInt(id);
+    await fetch('tasks.php', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(task)
+    });
+  }
+
+  form.reset();
+  taskIdInput.value = '';
+  loadTasks();
+});
+
+async function loadTasks() {
+  try {
+    const res = await fetch('tasks.php');
+
+    if (!res.ok) {
+      const text = await res.text(); 
+      console.error("Server responded with error:", text);
+      throw new Error("Failed to load tasks");
+    }
+
+    const data = await res.json(); 
+    tasks = data;
+    renderTasks();
+  } catch (err) {
+    console.error("Error loading tasks:", err.message);
+  }
+}
+
+
+function editTask(id) {
+  const task = tasks.find(t => t.task_id == id);
+  if (task) {
+    titleInput.value = task.title;
+    priorityInput.value = task.priority;
+    sessionsInput.value = task.sessions;
+    notesInput.value = task.notes;
+    taskIdInput.value = task.task_id;
+  }
+}
+
+async function deleteTask(id) {
+  if (confirm('Delete this task?')) {
+    await fetch('tasks.php', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ task_id: id })
+    });
+    loadTasks();
+  }
+}
+
+loadTasks();
+
+const toggleButton = document.getElementById('themeToggle');
+  const currentTheme = localStorage.getItem('theme');
+
+ 
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+
+
+  toggleButton.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+
+    
+  </script>
+</body>
+</html>

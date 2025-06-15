@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pomodoro- Login</title>
+    <link rel="stylesheet" href="styles.css">
+
+ <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+       body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    background-image: url('bg2.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: rgb(255, 255, 255,0.85);
+    padding: 50px 40px;
+    border-radius: 30px;
+    box-shadow: 12px 12px 25px rgba(0,0,0,0.1), -8px -8px 20px #ffebeb;
+    width: 360px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.login-box:hover {
+    box-shadow: 16px 16px 30px rgba(0,0,0,0.15), -10px -10px 25px #ffc4d0;
+}
+
+.login-box h2 {
+     font-family: 'Press Start 2P', cursive;
+    color: #ff6f91;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.login-box p {
+    color: #232323;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.login-box input {
+    width: 85%;
+    padding: 16px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 50px;
+    font-size: 15px;
+    outline: none;
+    background: #f3f0f0;
+    box-shadow: inset 4px 4px 8px #c2b8b8, inset -4px -4px 8px #eee0e0;
+    transition: box-shadow 0.3s ease;
+}
+
+.login-box input:focus {
+    box-shadow: inset 4px 4px 12px #d1d1d1, inset -4px -4px 12px #ffffff;
+}
+
+.login-box button {
+       font-family: 'Press Start 2P', cursive;
+    width: 40%;
+    padding: 14px;
+    margin: 12px 8px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fbaecb; 
+    color: white;
+    box-shadow: 6px 6px 12px rgb(255, 216, 216), -4px -4px 12px rgb(255, 189, 189);
+}
+
+.login-box button:hover {
+    background-color: #ffd6e0; 
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 15px rgba(0,0,0,0.15), -5px -5px 15px rgba(255,255,255,0.7);
+    color: #555; 
+}
+
+.signup-btn {
+       font-family: 'Press Start 2P', cursive;
+    background-color: #fcdde6; 
+    color: #7a4b4b; 
+}
+
+.signup-btn:hover {
+    background-color: #ffd6e0; 
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 15px rgb(219, 210, 210), -5px -5px 15px rgb(223, 212, 212);
+    color: #ffe7e7; 
+}
+
+ #menuToggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+  }
+
+  #menuToggle:hover {
+    transform: scale(1.1) rotate(3deg);
+    size:30px;
+  }
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  box-sizing: border-box; 
+  background-color: rgba(255, 245, 250, 0.96);
+  padding: 40px 25px;
+  box-shadow: 8px 0 15px rgba(0, 0, 0, 0.1);
+  transition: left 0.4s ease;
+  z-index: 1000;
+  font-family: 'Press Start 2P', cursive;
+  overflow-y: auto;
+}
+
+#sidebar a {
+  display: block;
+  margin: 30px 0;          
+  font-size: 14px;   
+  text-align: center;      
+  line-height: 1.8;       
+  color: #c94f7c;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#sidebar a:hover {
+  transform: translateX(5px);
+  color: #ff6f91;
+}
+
+ 
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: #fff0f5;
+  color: #ff6f91;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  background: #ffe4ec;
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle .sun {
+  opacity: 0;
+}
+
+
+body.dark-mode {
+  background-image: url('darkbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f2f2f2;
+}
+
+body.dark-mode .theme-toggle {
+  background: #333;
+  color: #ffe4ec;
+}
+
+body.dark-mode .theme-toggle .sun {
+  opacity: 1;
+}
+
+body.dark-mode .theme-toggle .icon:first-child {
+  opacity: 0;
+}
+
+body.dark-mode,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode .profile-username,
+body.dark-mode .profile-level,
+body.dark-mode .stat-item,
+body.dark-mode .choose-avatar-title,
+body.dark-mode .avatar-options,
+body.dark-mode .login-box input::placeholder {
+  color: #ffffff !important;
+}
+
+
+body.dark-mode .login-box,
+body.dark-mode .profile-page,
+body.dark-mode .task-container,
+body.dark-mode .custom-box {
+  background-color: rgba(0, 12, 52, 0.9);
+  color: #f2f2f2;
+  box-shadow: none;
+  border: 2px solid #ff88aa;
+}
+
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+
+body.dark-mode .profile-stats .stat-item,
+body.dark-mode .avatar-option,
+body.dark-mode #sidebar {
+  background-color: rgba(40, 40, 40, 0.95);
+  color: #eee;
+  border-color: #dd003f;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+body.dark-mode a {
+  color: #ff99c9;
+}
+body.dark-mode a:hover {
+  color: #ffc0cb;
+}
+
+    </style>
+</head>
+<body>
+    <img src="star-removebg-preview.png" id="menuToggle" alt="Menu" onclick="toggleSidebar()">
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+  <span class="icon">🌙</span>
+  <span class="icon sun">☀️</span>
+</button>
+<div id="sidebar">
+  <a href="index.html">Login</a>
+ <a href="userprofile.html">Profile</a>
+     <a href="tasks.html">Tasks</a>
+    <a href="focus.html">Timer</a>
+    <a href="custom.html">Custom Timer</a>
+    <a href="history.html">History</a>
+    <a href="goals.html">Goals</a>
+    <a href="motivational.html">Motivation</a>
+  <a href="about.html">About</a>
+</div>
+   
+    <div class="login-box">
+        <h2>Pomodoro</h2>
+        <p>Welcome! Get started by logging into your account.<br>If you do not have an account, sign up.</p>
+
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+
+        <div>
+            <button class="signup-btn" onclick="signUp()">Sign Up</button>
+            <button class="login-btn" onclick="login()">Login</button>
+        </div>
+    </div>
+
+   <script>
+async function signUp() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!username || !password) {
+        alert("Please fill in both fields.");
+        return;
+    }
+
+    try {
+        const response = await fetch("signup.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("🎉 Signup successful! You can now log in.");
+        } else {
+            alert("⚠️ " + result.error);
+        }
+    } catch (error) {
+        alert("Something went wrong during sign up.");
+        console.error(error);
+    }
+}
+
+  async function login() {
+    console.log("Sending login request...");
+console.log("Sending to:", window.location.href);
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    try {
+      const response = await fetch("login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("✅ Login successful!");
+        console.log(result);
+        
+      } else {
+        alert("❌ " + result.error);
+      }
+
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("⚠️ Network or server error.");
+    }
+  }
+
+let sidebarOpen = false;
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebarOpen = !sidebarOpen;
+    sidebar.style.left = sidebarOpen ? '0' : '-260px';
+}
+const toggleButton = document.getElementById('themeToggle');
+  const currentTheme = localStorage.getItem('theme');
+
+ 
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+  toggleButton.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+
+</body>
+</html>

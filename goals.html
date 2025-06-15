@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pomodoro Goals</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 100px;
+            font-family: 'Press Start 2P', cursive;
+            background-image: url('bg2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ff6f91;
+        }
+
+      
+        .progress-section {
+            width: 90%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-container {
+            position: relative;
+            background-color: #ffe9f0;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            height: 24px;
+            border: 2px solid #ff6f91;
+        }
+
+        .progress-bar-fill {
+            background-color: #ff6f91;
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-star {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #ffe600;
+            pointer-events: none;
+            transition: left 0.5s ease;
+            text-shadow: 0 0 8px #ffd700;
+        }
+
+       
+        .goals-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px 20px;
+            border-radius: 30px;
+            box-shadow: 12px 12px 25px rgba(0,0,0,0.1), -8px -8px 20px rgba(255,255,255,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+.goals-box {
+   
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.goals-box::-webkit-scrollbar {
+    display: none; 
+}
+
+        .page-title {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .goal-input-section {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .goal-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border: none;
+            background-color: #fbaecb;
+            color: white;
+            text-align: center;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);
+            min-height: 44px;
+        }
+
+        .add-goal-btn {
+            font-family: 'Press Start 2P', cursive;
+            padding: 12px 16px;
+            font-size: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #fbaecb;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);
+            min-height: 44px;
+        }
+
+        .add-goal-btn:hover {
+            background-color: #ffd6e0;
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.15), -5px -5px 15px rgba(255,255,255,0.7);
+            color: #555;
+        }
+
+        .goals-section {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 6px 6px 15px rgba(0,0,0,0.1), -4px -4px 15px rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+        }
+
+        .goals-section h3 {
+            font-size: 12px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .goal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 10px;
+    background-color: #fff5f7;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.1), -2px -2px 8px rgba(255,255,255,0.6);
+    flex-direction: row; 
+}
+
+
+        .goal-item input[type="checkbox"] {
+             flex-direction: row;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            font-family: 'Press Start 2P', cursive;
+            padding: 4px 8px;
+            font-size: 8px;
+            border: none;
+            border-radius: 8px;
+            background-color: #fbaecb;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background-color: #ffd6e0;
+            color: #555;
+        }
+
+        .clear-achieved-btn {
+            font-family: 'Press Start 2P', cursive;
+            padding: 10px 16px;
+            font-size: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #fbaecb;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -4px -4px 12px rgba(255,255,255,0.6);
+            margin: 10px auto 0;
+            display: block;
+        }
+
+        .clear-achieved-btn:hover {
+            background-color: #ffd6e0;
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.15), -5px -5px 15px rgba(255,255,255,0.7);
+            color: #555;
+        }
+
+        .all-done-message {
+            text-align: center;
+            font-size: 12px;
+            color: #ff6f91;
+            margin-top: 10px;
+            display: none;
+        }
+
+    
+   #menuToggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+  }
+
+  #menuToggle:hover {
+    transform: scale(1.1) rotate(3deg);
+    size:30px;
+  }
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  box-sizing: border-box; 
+  background-color: rgba(255, 245, 250, 0.96);
+  padding: 40px 25px;
+  box-shadow: 8px 0 15px rgba(0, 0, 0, 0.1);
+  transition: left 0.4s ease;
+  z-index: 1000;
+  font-family: 'Press Start 2P', cursive;
+  overflow-y: auto;
+}
+
+#sidebar a {
+  display: block;
+  margin: 30px 0;         
+  font-size: 14px;         
+  line-height: 1.8;  
+   text-align: center;       
+  color: #c94f7c;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#sidebar a:hover {
+  transform: translateX(5px);
+  color: #ff6f91;
+}
+
+ 
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: #fff0f5;
+  color: #ff6f91;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 1101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  background: #ffe4ec;
+}
+
+.theme-toggle .icon {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle .sun {
+  opacity: 0;
+}
+
+
+body.dark-mode {
+  background-image: url('darkbg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #f2f2f2;
+}
+
+body.dark-mode .theme-toggle {
+  background: #333;
+  color: #ffe4ec;
+}
+
+body.dark-mode .theme-toggle .sun {
+  opacity: 1;
+}
+
+body.dark-mode .theme-toggle .icon:first-child {
+  opacity: 0;
+}
+
+body.dark-mode,
+body.dark-mode p,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode .profile-username,
+body.dark-mode .profile-level,
+body.dark-mode .stat-item,
+body.dark-mode .choose-avatar-title,
+body.dark-mode .avatar-options,
+body.dark-mode .login-box input::placeholder {
+  color: #ffffff !important;
+}
+
+
+body.dark-mode .login-box,
+body.dark-mode .profile-page,
+body.dark-mode .task-container,
+body.dark-mode .custom-box {
+  background-color: rgba(0, 12, 52, 0.9);
+  color: #f2f2f2;
+  box-shadow: none;
+  border: 2px solid #ff88aa;
+}
+
+
+body.dark-mode input,
+body.dark-mode button {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #555;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+
+body.dark-mode .profile-stats .stat-item,
+body.dark-mode .avatar-option,
+body.dark-mode #sidebar {
+  background-color: rgba(40, 40, 40, 0.95);
+  color: #eee;
+  border-color: #dd003f;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+body.dark-mode a {
+  color: #ff99c9;
+}
+body.dark-mode a:hover {
+  color: #ffc0cb;
+}
+
+.goal-btn {
+  background-color: #f8c8dc;
+  border: none;
+  color: #7b2d4f;
+  padding: 6px 12px;
+  margin: 4px 4px 0 0;
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.goal-btn:hover {
+  background-color: #f498ba;
+  transform: scale(1.05);
+}
+
+
+.goal-btn.achieve {
+  background-color: #c4e3cb;
+  color: #25603f;
+}
+
+.goal-btn.achieve:hover {
+  background-color: #a2d1b0;
+}
+
+.goal-btn.delete {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.goal-btn.delete:hover {
+  background-color: #f1b0b7;
+}
+
+
+body.dark-mode .goals-box,
+body.dark-mode .goals-section {
+  background-color: rgba(0, 12, 52, 0.95);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  border: 2px solid #ff88aa;
+}
+
+
+body.dark-mode .goal-item {
+  background-color: rgba(40, 40, 60, 0.95);
+  color: #fff;
+  border: 2px solid #ff88aa;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+
+body.dark-mode .goal-input {
+  background-color: #222;
+  color: #fff;
+  box-shadow: inset 2px 2px 6px #111, inset -2px -2px 6px #444;
+}
+
+
+body.dark-mode .add-goal-btn,
+body.dark-mode .remove-btn,
+body.dark-mode .clear-achieved-btn,
+body.dark-mode .goal-btn {
+  background-color: #2a2a3d;
+  color: #fff;
+  border: 1px solid #ff88aa;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.4), -2px -2px 6px rgba(255,255,255,0.05);
+}
+
+body.dark-mode .goal-btn:hover,
+body.dark-mode .add-goal-btn:hover,
+body.dark-mode .remove-btn:hover,
+body.dark-mode .clear-achieved-btn:hover {
+  background-color: #3a3a55;
+  color: #ffd6e0;
+  transform: scale(1.02);
+}
+
+body.dark-mode .page-title,
+body.dark-mode .progress-title,
+body.dark-mode .goals-section h3 {
+  color: #ffffff;
+}
+
+    </style>
+</head>
+<body>
+<img src="star-removebg-preview.png" id="menuToggle" alt="Menu" onclick="toggleSidebar()">
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+  <span class="icon">🌙</span>
+  <span class="icon sun">☀️</span>
+</button>
+
+<div id="sidebar">
+  <a href="index.html">Login</a>
+  <a href="userprofile.html">Profile</a>
+     <a href="tasks.html">Tasks</a>
+    <a href="focus.html">Timer</a>
+    <a href="custom.html">Custom Timer</a>
+    <a href="history.html">History</a>
+    <a href="goals.html">Goals</a>
+    <a href="motivational.html">Motivation</a>
+  <a href="about.html">About</a>
+</div>
+   
+    <div class="progress-section">
+        <div class="progress-title">Progress</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBar"></div>
+            <div class="progress-star" id="progressStar">⭐</div>
+        </div>
+    </div>
+
+  
+    <div class="goals-box">
+        <div class="page-title">Goals</div>
+
+        <div class="goal-input-section">
+            <input type="text" id="goalInput" class="goal-input" placeholder="Enter a goal...">
+            <button class="add-goal-btn" onclick="addGoal()">Add</button>
+        </div>
+
+      
+        <div class="goals-section">
+            <h3>Active Goals</h3>
+            <div id="activeGoalsList"></div>
+        </div>
+
+        
+        <div class="goals-section">
+            <h3>Achieved Goals</h3>
+            <div id="achievedGoalsList"></div>
+            <button class="clear-achieved-btn" onclick="clearAchievedGoals()">Clear Achieved Goals</button>
+        </div>
+
+        <div class="all-done-message" id="allDoneMessage"> All goals completed!</div>
+    </div>
+
+  
+<script>
+let goals = [];
+
+async function loadGoals() {
+  try {
+    const res = await fetch('goals.php');
+    if (!res.ok) throw new Error("Failed to load goals");
+    goals = await res.json();
+    renderGoals();
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+function updateProgressBar() {
+  const total = goals.length;
+  const achieved = goals.filter(goal => goal.is_achieved == 1).length;
+
+  const percent = total === 0 ? 0 : (achieved / total) * 100;
+
+  const progressBar = document.getElementById('progressBar');
+  const progressStar = document.getElementById('progressStar');
+
+  progressBar.style.width = `${percent}%`;
+  progressStar.style.left = `calc(${percent}% - 12px)`; 
+}
+
+function renderGoals() {
+  const activeContainer = document.getElementById('activeGoalsList');
+  const achievedContainer = document.getElementById('achievedGoalsList');
+  activeContainer.innerHTML = '';
+  achievedContainer.innerHTML = '';
+
+  goals.forEach(goal => {
+    const container = goal.is_achieved == 1 ? achievedContainer : activeContainer;
+    const div = document.createElement('div');
+    div.classList.add('goal-item');
+    div.innerHTML = `
+      <strong>${goal.goal_text}</strong><br>
+      Created: ${new Date(goal.created_at).toLocaleString()}<br>
+     ${goal.is_achieved == 1 ? `
+  <span class="star">⭐ Achieved</span><br>
+  Achieved At: ${new Date(goal.achieved_at).toLocaleString()}<br>
+  <button class="goal-btn delete" onclick="deleteGoal(${goal.goal_id})">Delete</button>
+` : `
+  <button class="goal-btn achieve" onclick="markAchieved(${goal.goal_id})">Mark as Achieved</button>
+  <button class="goal-btn delete" onclick="deleteGoal(${goal.goal_id})">Delete</button>
+`}
+
+    `;
+    container.appendChild(div);
+  });
+    updateProgressBar();
+}
+
+async function addGoal() {
+  const input = document.getElementById('goalInput');
+  const goal_text = input.value.trim();
+  if (!goal_text) return;
+
+  await fetch('goals.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ goal_text })
+  });
+
+  input.value = '';
+  loadGoals();
+}
+
+async function markAchieved(goal_id) {
+  await fetch('goals.php', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ goal_id, is_achieved: 1 })
+  });
+  loadGoals();
+}
+
+async function deleteGoal(goal_id) {
+  if (!confirm("Delete this goal?")) return;
+  await fetch('goals.php', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ goal_id })
+  });
+  loadGoals();
+}
+
+async function clearAchievedGoals() {
+  if (!confirm("Clear all achieved goals?")) return;
+  await fetch('goals.php', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ goal_id: 'all_achieved' })
+  });
+  loadGoals();
+}
+
+loadGoals();
+  let sidebarOpen = false;
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebarOpen = !sidebarOpen;
+        sidebar.style.left = sidebarOpen ? '0' : '-260px';
+    }
+
+const toggleButton = document.getElementById('themeToggle');
+  const currentTheme = localStorage.getItem('theme');
+
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+
+  toggleButton.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+
+</body>
+</html>
