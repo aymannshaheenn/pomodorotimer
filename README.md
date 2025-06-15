@@ -1,41 +1,61 @@
-# pomodoro Timer
+# ⏱️ Pomodoro – Task & Productivity Manager 🌸
 
-**Pomodoro** is a comprehensive and user-friendly task and productivity management system based on the **Pomodoro Technique**. This web application was developed as part of a **Database Systems course project**, featuring a clean and functional interface, goal tracking, session logging, and database integration.
-
----
-
-## 📌 Project Summary
-
-This project demonstrates the integration of **front-end technologies**, **PHP**, and **MySQL** to create a fully functional Pomodoro-based productivity system. Users can manage tasks, track timed work sessions, and monitor goal progress—all stored and retrieved through a relational database structure.
+**Pomodoro** is a beautifully crafted web application that combines time management, goal setting, and productivity tracking using the **Pomodoro Technique**. Developed as a **Database Systems course project**, this app helps users stay focused while managing tasks and visualizing their progress through goal-based tracking.
 
 ---
 
-## 🛠️ Tech Stack
+## 📚 About the Project
 
-- **Frontend**: HTML5, CSS3, JavaScript (vanilla)
-- **Backend**: PHP 8
-- **Database**: MySQL (InnoDB engine with relational design)
-- **Environment**: XAMPP / Apache server
+This project showcases practical implementation of:
+- **Relational database design**
+- **Full-stack web development**
+- **User-centered design**
+
+Pomodoro empowers users to:
+- Log focused work sessions
+- Track and manage tasks by priority
+- Set and achieve personal goals
+- Monitor progress through a visual progress bar
 
 ---
 
-## 💡 Features
+## ✨ Key Features
 
 | Feature | Description |
 |--------|-------------|
-| 👤 **User Authentication** | Sign up and log in securely to manage personal tasks and sessions. |
-| 📋 **Task Management** | Add, update, and delete tasks with priority levels and session targets. |
-| ⏳ **Pomodoro Timer** | Start work sessions with optional short or long breaks, and track remaining sessions per task. |
-| 🎯 **Goal Progress Tracking** | Define personal goals and monitor achievement progress through a visual progress bar. |
-| 📜 **Session Logging** | Every work/break session is saved in the database with task and timestamp information. |
-| 🌙 **Dark Mode Support** | Toggle between light and dark themes for a comfortable UI experience. |
-| 🌸 **Stylized Interface** | Pink floral theme with a notepad-style layout focused on clarity and aesthetics. |
+| 👤 **User Authentication** | Secure signup and login with session-based authentication |
+| 📋 **Task Manager** | Create, edit, delete tasks with priorities (High, Medium, Low) |
+| ⏱️ **Pomodoro Timer** | Start work sessions with built-in short and long breaks |
+| 🎯 **Goal Tracking** | Set personal goals and watch your progress bar move as you achieve them |
+| 📜 **Session Logging** | All sessions are recorded in the database for history tracking |
+| 🌙 **Dark Mode** | Toggle between light and dark themes to suit your environment |
+| 🌸 **Elegant UI** | Calming pink floral theme with notepad-style layout for enhanced focus |
 
 ---
 
-## 🧩 Database Design
+## 🖼️ Screenshots
 
-### 📁 Database Name: `pomodoro_task_manager`
+### 🌼 Home 
+
+![Login Page](frontend.png)
+
+### 🌙 Dark Mode View
+
+![Dark Mode](front.png)
+
+---
+
+## 🧠 Entity-Relationship (ER) Diagram
+
+This ER diagram visualizes the relational structure of the database used in Pomodoro:
+
+![ER Diagram](PomodoroTimer4.png)
+
+---
+
+## 🗃️ Database Design
+
+### 📂 Database Name: `pomodoro_task_manager`
 
 #### 🔐 `users`
 - `user_id` (PK)
@@ -48,7 +68,7 @@ This project demonstrates the integration of **front-end technologies**, **PHP**
 - `user_id` (FK)
 - `title`
 - `priority` (`High`, `Medium`, `Low`)
-- `sessions` (target session count)
+- `sessions` (number of Pomodoro sessions required)
 - `notes`
 
 #### ⏱️ `sessions`
@@ -80,3 +100,4 @@ This project demonstrates the integration of **front-end technologies**, **PHP**
 - `achieved_at` (nullable)
 
 ---
+
